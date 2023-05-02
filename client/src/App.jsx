@@ -7,10 +7,10 @@ function App() {
     <Box className="App">
       <Navbar />
       <Box
-        p={{ base: "8px 4px 8px" }}
+        p={{ base: "8px 10px 8px" }}
         w={{ base: "100%" }}
         bg="#f9fafe"
-        minH="calc(100vh-73px)"
+        minH="calc(100vh - 73px)"
       >
         <AllRoutes />
       </Box>

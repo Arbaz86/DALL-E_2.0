@@ -18,7 +18,7 @@ const Navbar = () => {
         <Image src={OpenAI_Logo} alt="OpenAI_Logo" w="28" objectFit="contain" />
       </Link>
       <Link to="create-post">
-        <Button bg="#6469ff" size="sm" color="white">
+        <Button colorScheme="purple" size="sm" color="white">
           Create
         </Button>
       </Link>
