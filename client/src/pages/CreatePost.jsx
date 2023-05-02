@@ -15,13 +15,19 @@ import { FormField, Loader } from "../components";
 
 const CreatePost = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: "", prompts: "", photo: "" });
+  const [form, setForm] = useState({ name: "", prompt: "", photo: "" });
   const [generatingImage, setGeneratingImage] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {};
-  const handleChange = (e) => {};
-  const handleSurpriseMe = (e) => {};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+  const handleSurpriseMe = () => {
+    const randomPrompt = getRandomPrompt(form.prompt);
+    setForm({ ...form, prompt: randomPrompt });
+  };
   const generateImage = (e) => {};
 
   return (
