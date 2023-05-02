@@ -6,6 +6,7 @@ import {
   Heading,
   Image,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,12 +15,12 @@ import { getRandomPrompt } from "../utils";
 import { FormField, Loader } from "../components";
 
 const CreatePost = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", prompt: "", photo: "" });
   const [generatingImage, setGeneratingImage] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {};
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -28,7 +29,41 @@ const CreatePost = () => {
     const randomPrompt = getRandomPrompt(form.prompt);
     setForm({ ...form, prompt: randomPrompt });
   };
-  const generateImage = (e) => {};
+  const generateImage = async (e) => {
+    if (form.prompt) {
+      try {
+        setGeneratingImage(true);
+        const response = await fetch("http://localhost:8080/api/v1/dalle", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt: form.prompt }),
+        });
+
+        const data = await response.json();
+        setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
+      } catch (error) {
+        toast({
+          title: "error",
+          description: error.message,
+          status: "fail",
+          duration: 3000,
+          isClosable: true,
+        });
+      } finally {
+        setGeneratingImage(false);
+      }
+    } else {
+      toast({
+        title: "Please Enter Prompt!",
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+  const handleSubmit = (e) => {};
 
   return (
     <Box maxW="7xl" m="auto">
