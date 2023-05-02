@@ -1,13 +1,19 @@
 import { Box } from "@chakra-ui/react";
 import "./App.css";
-import AllRoutes from "./components/AllRoutes";
-import Navbar from "./components/Navbar";
+import { AllRoutes, Navbar } from "./components";
 
 function App() {
   return (
     <Box className="App">
       <Navbar />
-      <AllRoutes />
+      <Box
+        p={{ base: "8px 4px 8px" }}
+        w={{ base: "100%" }}
+        bg="#f9fafe"
+        minH="calc(100vh-73px)"
+      >
+        <AllRoutes />
+      </Box>
     </Box>
   );
 }
