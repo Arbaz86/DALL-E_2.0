@@ -1,10 +1,10 @@
-# DALL-E
+# DALL-E_2.0
 
-DALL-E is a web application that uses the OpenAI API to generate images based on user prompts. Users can enter a short phrase or sentence, and the application will use machine learning algorithms to generate an image based on that prompt. 
+DALL-E_2.0 is a web application that uses the OpenAI API to generate images based on user prompts. Users can enter a short phrase or sentence, and the application will use machine learning algorithms to generate an image based on that prompt. 
 
 ## Tech Stack
 
-DALL-E is built using the following technologies:
+DALL-E_2.0 is built using the following technologies:
 
 - JavaScript
 - React
@@ -16,7 +16,7 @@ DALL-E is built using the following technologies:
 
 ## Features
 
-DALL-E provides the following features:
+DALL-E_2.0 provides the following features:
 
 - Image generation based on user prompts
 - Image sharing with the developer community
@@ -25,7 +25,7 @@ DALL-E provides the following features:
 
 ## Getting Started
 
-To run DALL-E on your local machine, follow these steps:
+To run DALL-E_2.0 on your local machine, follow these steps:
 
 1. Clone the repository
 2. Install the required packages by running `npm install`
