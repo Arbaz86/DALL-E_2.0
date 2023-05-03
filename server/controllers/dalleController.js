@@ -32,7 +32,7 @@ exports.createDalleImages = async (req, res) => {
     });
 
     // Log the response from the OpenAI API
-    console.log(aiResponse);
+    // console.log(aiResponse);
 
     // Get the base64 encoded image data from the OpenAI API response
     const image = aiResponse.data.data[0].b64_json;
@@ -46,7 +46,7 @@ exports.createDalleImages = async (req, res) => {
     });
   } catch (error) {
     // Log any errors and return error message to client
-    console.log(error.message);
+    // console.log(error.message);
     res
       .status(500)
       .json({ status: "fail", message: error?.response?.data.error.message });
