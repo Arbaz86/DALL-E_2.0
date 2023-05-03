@@ -35,3 +35,7 @@ To run DALL-E_2.0 on your local machine, follow these steps:
 ## Contributing
 
 If you would like to contribute to DALL-E, please submit a pull request. 
+
+## Live Deployment
+
+This project is live at https://dalle-2-0-app.netlify.app/
