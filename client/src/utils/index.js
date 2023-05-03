@@ -1,3 +1,5 @@
+import FileSaver from "file-saver";
+
 // This line imports the 'surpriseMePrompts' array from the '../constants' module.
 import { surpriseMePrompts } from "../constants";
 
@@ -9,4 +11,8 @@ export function getRandomPrompt(prompts) {
   // If the selected prompt is the same as the prompt argument passed to the function, it recursively calls itself until a different prompt is selected.
   if (randomPrompts === prompts) return getRandomPrompt(prompts);
   return randomPrompts;
+}
+
+export async function downloadImage(_id, photo) {
+  FileSaver.saveAs(photo, `download-${_id}.jpg`);
 }

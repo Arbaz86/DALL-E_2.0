@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Loader, FormField } from "../components";
 import { Box, Flex, Grid, Heading, Text } from "@chakra-ui/react";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const RenderCards = ({ data, title }) => {
   if (data?.length > 0) {
@@ -17,10 +18,56 @@ const RenderCards = ({ data, title }) => {
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
-  const [allPost, setAllPost] = useState(null);
-  const [searchText, setSearchText] = useState(false);
+  const [allPosts, setAllPosts] = useState(null);
+  const [searchText, setSearchText] = useState("");
+  const [searchResults, setSearchResults] = useState(null);
+  const [searchTimeout, setSearchTimeout] = useState(null);
+
+  const fetchPost = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("http://localhost:8080/api/v1/post", {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+
+        setAllPosts(result.data.reverse());
+      }
+    } catch (error) {
+      toast({
+        title: error.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPost()
+  }, [])
+
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout)
+
+    setSearchText(e.target.value)
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResults = allPosts.filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()) || item.prompt.toLowerCase().includes(searchText.toLowerCase()))
+        setSearchResults(searchResults)
+      }, 500)
+    )
+  }
+
   return (
-    <Box maxW="7xl">
+    <Box maxW="7xl" m="auto">
       <Box>
         <Heading fontWeight="600" as="h1" color="#222328" fontSize="32px">
           The Community Showcase
@@ -31,7 +78,7 @@ const Home = () => {
         </Text>
       </Box>
       <Box mt="16">
-        <FormField />
+        <FormField labelName="Search Post" type="text" name="text" placeholder="Search posts" value={searchText} handleChange={handleSearchChange} />
       </Box>
 
       <Box mt="10">
@@ -47,21 +94,21 @@ const Home = () => {
               </Heading>
             )}
 
-            <Grid
-              templateColumns={{
-                lg: "repeat(4, 1fr)",
-                md: "repeat(3, 1fr)",
-                xs: "repeat(2, 1fr)",
-                base: "repeat(1, 1fr)",
-              }}
-              gap={3}
+            <Flex
+              flexWrap="wrap"
+
+              gap={10}
             >
               {searchText ? (
-                <RenderCards data={[]} title="No Search result found" />
+                <RenderCards data={searchResults} title="No Search result found" />
               ) : (
-                <RenderCards data={[]} title="No posts found" />
+
+                <RenderCards
+                  data={allPosts}
+                  title="No posts found"
+                />
               )}
-            </Grid>
+            </Flex>
           </>
         )}
       </Box>

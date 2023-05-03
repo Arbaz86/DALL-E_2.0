@@ -63,7 +63,42 @@ const CreatePost = () => {
       });
     }
   };
-  const handleSubmit = (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (form.prompt && form.name) {
+      setLoading(true);
+
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/posts", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(form),
+        });
+
+        await response.json();
+        navigate("/");
+      } catch (error) {
+        toast({
+          title: error.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      toast({
+        title: "Please enter a prompt and generate an image",
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <Box maxW="7xl" m="auto">
@@ -82,7 +117,7 @@ const CreatePost = () => {
           <Flex direction="column">
             <FormField
               labelName="Your name"
-              name="text"
+              name="name"
               type="text"
               placeholder="Arbaz Hussain"
               value={form.name}
